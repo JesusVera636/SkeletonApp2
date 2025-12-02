@@ -1,0 +1,40 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Login</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+
+    <ion-item>
+      <ion-label position="floating">Rut</ion-label>
+      <ion-input formControlName="rut"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Contraseña</ion-label>
+      <ion-input formControlName="password" type="password"></ion-input>
+    </ion-item>
+
+    <ion-button class="ion-margin-top" expand="block" type="submit" [disabled]="userForm.invalid">
+      Ingresar
+    </ion-button>
+
+    <ion-button style="visibility: hidden;" class="ion-margin-top" expand="block" (click)="iniciarCarga()">
+      Iniciar 5s
+    </ion-button>
+
+    <ion-button class="ion-margin-top" expand="block" (click)="toRegister()">
+      Crear Cuenta
+    </ion-button>
+
+    <ion-text *ngIf="mensaje" class="ion-text-center ion-margin-top">
+      <p>{{ mensaje }}</p>
+    </ion-text>
+
+  </form>
+  
+</ion-content>
+
+<app-loader-overlay #loader [defaultDuration]="5000"></app-loader-overlay>

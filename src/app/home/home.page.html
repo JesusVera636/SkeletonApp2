@@ -1,20 +1,49 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Blank
+      Bienvenido/a {{ nombre }}
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content class="ion-padding">
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-  </div>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title class="ion-text-center">Registrar Mascota</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      
+      <ion-button class="ion-margin-top" expand="block" (click)="petRegister()">
+        Ingresar
+      </ion-button>
+
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card *ngIf="mascotas.length == 0" class="ion-text-center">
+    <ion-card-header>
+      <ion-card-title>No hay mascotas registradas</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      
+      ¡Todos han encontrado un hogar!
+
+    </ion-card-content>
+  </ion-card>
+
+  <ion-list [inset]="true">
+
+    <ion-item-sliding *ngFor="let mascota of mascotas">
+      <ion-item>
+        <ion-label>{{ mascota.nombre }} de {{ mascota.edad }} meses</ion-label>
+      </ion-item>
+
+      <ion-item-options>
+        <ion-item-option color="success" (click)="adopt(mascota.id)">Adoptar</ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+
+  </ion-list>
+
 </ion-content>
