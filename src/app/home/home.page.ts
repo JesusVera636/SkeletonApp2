@@ -51,6 +51,7 @@ export class HomePage {
   }
 
   adopt(id: any) {
+    console.log()
     this.petSv.deletePet(id).subscribe({
       next: () => {
         this.mascotas = this.mascotas.filter(mascota => mascota.id !== id);

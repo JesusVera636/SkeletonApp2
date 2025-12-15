@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 import { User, UserServ } from 'src/app/services/user-serv';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-registrar',
@@ -13,6 +14,7 @@ import { User, UserServ } from 'src/app/services/user-serv';
   imports: [ CommonModule, ReactiveFormsModule, IonicModule ]
 })
 export class RegistrarPage {
+  private router = inject(Router);
 
   userForm: FormGroup;
 
@@ -49,6 +51,9 @@ export class RegistrarPage {
         this.mensaje = "Usuario Registrado";
         this.isSubmitting = false;
         this.userForm.reset();
+
+        this.router.navigate(['/login']);
+
       },
       error: (error: any) => {
         console.error("Error al Agregar Usuario", error)

@@ -22,4 +22,12 @@ export const routes: Routes = [
     path: 'reg-mascota',
     loadComponent: () => import('./pages/reg-mascota/reg-mascota.page').then( m => m.RegMascotaPage)
   },
+  {
+    path: 'not-found',
+    loadComponent: () => import('./shared/not-found/not-found.page').then( m => m.NotFoundPage)
+  },
+  {
+    path: '**',
+    redirectTo: 'not-found'
+  },
 ];

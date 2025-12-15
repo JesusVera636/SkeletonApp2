@@ -21,10 +21,6 @@
       Ingresar
     </ion-button>
 
-    <ion-button style="visibility: hidden;" class="ion-margin-top" expand="block" (click)="iniciarCarga()">
-      Iniciar 5s
-    </ion-button>
-
     <ion-button class="ion-margin-top" expand="block" (click)="toRegister()">
       Crear Cuenta
     </ion-button>
@@ -36,5 +32,3 @@
   </form>
   
 </ion-content>
-
-<app-loader-overlay #loader [defaultDuration]="5000"></app-loader-overlay>

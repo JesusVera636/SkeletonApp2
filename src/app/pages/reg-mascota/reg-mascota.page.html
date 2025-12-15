@@ -5,7 +5,6 @@
 </ion-header>
 
 <ion-content class="ion-padding">
-<ion-content class="ion-padding">
   <form [formGroup]="petForm" (ngSubmit)="onSubmit()">
     <ion-item>
       <ion-label position="floating">Nombre</ion-label>
@@ -21,8 +20,18 @@
       <ion-label position="floating">Edad en Meses</ion-label>
       <ion-input formControlName="edad"></ion-input>
     </ion-item>
-    <ion-button expand="block" color="success" type="submit" [disabled]="isSubmitting">{{ isSubmitting ? "Registrando..." : "Registrar" }}</ion-button>
+
+    <ion-item>
+      <ion-label position="floating">Foto</ion-label>
+      <ion-button style="margin-top: 30px;" expand="block" color="secondary" (click)="tomarFoto()">Abrir Camara</ion-button>
+      <ion-img *ngIf="foto" [src]="foto.dataUrl" style="width: 100%; height: 200px;"></ion-img>
+    </ion-item>
+
+
+    <ion-button expand="block" color="success" type="submit" [disabled]="isSubmitting">{{ isSubmitting ? "Registrando..." : "Finalizar" }}</ion-button>
   </form>
+
+  <ion-button expand="block"type="submit" (click)="goHome()">Volver al Listado</ion-button>
 
   <ion-text *ngIf="mensaje" class="ion-text-center ion-margin-top">
     <p>{{ mensaje }}</p>

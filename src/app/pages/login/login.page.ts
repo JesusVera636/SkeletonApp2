@@ -1,9 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, OnInit, ViewChild } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { IonicModule, ToastController } from '@ionic/angular';
-import { LoadingComponent } from 'src/app/shared/loader-overlay/loader-overlay.component';
+import { IonicModule } from '@ionic/angular';
 
 import { UserServ, User } from 'src/app/services/user-serv';
 
@@ -11,10 +10,9 @@ import { UserServ, User } from 'src/app/services/user-serv';
   selector: 'app-login',
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
-  imports: [IonicModule, CommonModule, ReactiveFormsModule, LoadingComponent]
+  imports: [IonicModule, CommonModule, ReactiveFormsModule]
 })
 export class LoginPage implements OnInit {
-  @ViewChild('loader') loader?: LoadingComponent;
   private router = inject(Router);
 
   usuarios: User[] = [];
@@ -46,13 +44,9 @@ export class LoginPage implements OnInit {
           });
         }
       }
-      this.mensaje = "Usuario o contraseña incorrecto"
+      this.mensaje = "Rut o contraseña incorrecto"
     }
 
-  }
-
-  iniciarCarga() {
-    this.loader?.showfor(1000);
   }
 
   loadUsers() {

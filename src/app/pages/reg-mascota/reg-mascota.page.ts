@@ -1,9 +1,14 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 import { Pet, PetServ } from 'src/app/services/pet-serv';
+import { Router } from '@angular/router';
+
+import { Camera, CameraResultType, CameraSource, Photo } from '@capacitor/camera';
+
+import { CameraServ } from 'src/app/services/camera-serv';
 
 @Component({
   selector: 'app-reg-mascota',
@@ -13,6 +18,8 @@ import { Pet, PetServ } from 'src/app/services/pet-serv';
   imports: [ CommonModule, FormsModule, ReactiveFormsModule, IonicModule ]
 })
 export class RegMascotaPage{
+  private router = inject(Router);
+  private camera = inject(CameraServ);
 
   petForm: FormGroup;
 
@@ -21,11 +28,15 @@ export class RegMascotaPage{
   mensaje: string = '';
   errorMsj: string = '';
 
+  dirFoto: string = '';
+
+  foto?: Photo;
+
   constructor(private fb: FormBuilder, private petServ: PetServ) {
     this.petForm = this.fb.group({
       nombre: ['', Validators.required],
       especie: ['', Validators.required],
-      edad: [0, Validators.required],
+      edad: [0, Validators.required]
     });
   }
 
@@ -33,12 +44,13 @@ export class RegMascotaPage{
     this.mensaje = '';
     this.errorMsj = '';
 
+
     if (this.petForm.invalid) {
       this.petForm.markAllAsTouched();
       this.errorMsj = 'Por favor complete todos los campos';
       return;
     }
-
+    
     this.isSubmitting = true;
 
     this.petServ.createPet(this.petForm.value).subscribe({
@@ -55,6 +67,39 @@ export class RegMascotaPage{
       }
     });
 
+  }
+
+  async tomarFoto() {
+    try {
+      const image = await Camera.getPhoto({
+        quality: 70,
+        resultType: CameraResultType.DataUrl,
+        source: CameraSource.Camera,
+      });
+
+      this.foto = image ?? undefined;
+      console.log("Foto Tomada")
+
+    } catch (error) {
+      console.error("Error al tomar la foto", error)
+    }
+  }
+
+  async cargarFoto() {
+    if (this.foto == undefined) {
+      this.errorMsj = "Error al Cargar Foto";
+    } else {
+      this.camera.guardar(this.foto).then(res => {
+        this.dirFoto = res;
+      });
+      this.petForm.value.imagen = this.dirFoto;
+      this.mensaje = "Imagen Cargada";
+      this.errorMsj = '';
+    }
+  }
+
+  goHome() {
+    this.router.navigate(['/home']);
   }
 
 }

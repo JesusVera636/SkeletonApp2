@@ -10,15 +10,10 @@
 
   <ion-card>
     <ion-card-header>
-      <ion-card-title class="ion-text-center">Registrar Mascota</ion-card-title>
-    </ion-card-header>
-    <ion-card-content>
-      
-      <ion-button class="ion-margin-top" expand="block" (click)="petRegister()">
-        Ingresar
+      <ion-button expand="block" (click)="petRegister()">
+        Registrar Mascota
       </ion-button>
-
-    </ion-card-content>
+    </ion-card-header>
   </ion-card>
 
   <ion-card *ngIf="mascotas.length == 0" class="ion-text-center">
