@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 
@@ -9,15 +9,18 @@ import { Router } from '@angular/router';
 import { Camera, CameraResultType, CameraSource, Photo } from '@capacitor/camera';
 
 import { CameraServ } from 'src/app/services/camera-serv';
+import { LoaderComponent } from 'src/app/shared/loader/loader.component';
 
 @Component({
   selector: 'app-reg-mascota',
   templateUrl: './reg-mascota.page.html',
   styleUrls: ['./reg-mascota.page.scss'],
   standalone: true,
-  imports: [ CommonModule, FormsModule, ReactiveFormsModule, IonicModule ]
+  imports: [ CommonModule, FormsModule, ReactiveFormsModule, IonicModule, LoaderComponent ]
 })
 export class RegMascotaPage{
+  @ViewChild('loader') loader?: LoaderComponent;
+
   private router = inject(Router);
   private camera = inject(CameraServ);
 
@@ -53,6 +56,7 @@ export class RegMascotaPage{
     
     this.isSubmitting = true;
 
+    this.loader?.showfor(2500);
     this.petServ.createPet(this.petForm.value).subscribe({
       next: (pet: Pet) => {
         console.log("Mascota Registrada", pet);
